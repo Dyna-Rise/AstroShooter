@@ -44,6 +44,14 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (inDamage)
+        {
+            //点滅処理
+
+
+            return;
+        }
+
         rbody.velocity = new Vector2(axisH,axisV).normalized * speed;
     }
 
@@ -107,4 +115,52 @@ public class PlayerController : MonoBehaviour
 
         return angle;
     }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        //Enemyタグのオブジェクトとぶつかったら
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            //ダメージメソッドの発動
+            GetDamage(collision.gameObject);
+        }
+    }
+
+    //ダメージメソッド
+    void GetDamage(GameObject enemy)
+    {
+        hp--; //体力を減らす
+
+        if(hp > 0)
+        {
+            //動きが止まる
+            rbody.velocity = Vector2.zero;
+
+            //ノックバック（方角計算、AddForceで飛ぶ)
+            //プレイヤー位置 - 敵の位置 の差分を正規化で整えて * 4.0で方向と力を調整
+            Vector3 v = (transform.position - enemy.transform.position).normalized * 4.0f;
+            //事前にセッティングした方向と力を頼りに後ろに飛ぶ
+            rbody.AddForce(v, ForceMode2D.Impulse);
+
+            //ダメージフラグをONにする(硬直する ※ FixedUpdate に影響が行く）
+            inDamage = true;
+
+            //時間差でダメージフラグをOFFに解除
+            Invoke("DamageEnd", 0.25f);
+        }
+        else
+        {
+            //ゲームオーバー
+            Debug.Log("ゲームオーバー");
+        }
+    }
+
+    //ダメージフラグを解除するメソッド
+    void DamageEnd()
+    {
+        inDamage = false; //フラグ解除
+        //プレイヤーの姿(SpriteRecdererコンポーネント)を明確に有効状態にしておく
+        GetComponent<SpriteRenderer>().enabled = true;
+    }
+
 }
