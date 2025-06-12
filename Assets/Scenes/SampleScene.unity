@@ -316,9 +316,10 @@ GameObject:
   - component: {fileID: 546635239}
   - component: {fileID: 546635238}
   - component: {fileID: 546635237}
-  - component: {fileID: 546635242}
-  - component: {fileID: 546635241}
   - component: {fileID: 546635240}
+  - component: {fileID: 546635241}
+  - component: {fileID: 546635242}
+  - component: {fileID: 546635243}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -491,6 +492,21 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 3
   angleZ: -90
+--- !u!114 &546635243
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 546635236}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 038338abd508a8245a08a68dfc98da97, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  riflePrefab: {fileID: 1304863421913512870, guid: c9ece37cebbfb3e44b5c5eb5f375c442, type: 3}
+  bulletPrefab: {fileID: 3353365773173306652, guid: 70a8f0ef39a864842ae1b932587a597d, type: 3}
+  shootSpeed: 12
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
