@@ -49,8 +49,14 @@ public class RifleShooter : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.R)) Attack(); //キーがおされたら弾丸発射
     }
 
+    //攻撃（弾丸発射メソッド）
     void Attack()
     {
+        ////すでに攻撃中であれば何もしない
+        if (inAttack) return;
+
+        inAttack = true; //攻撃中フラグをON
+
         float angleZ = playerCnt.angleZ; //Playerの角度を取得
         Quaternion bulletRotate = Quaternion.Euler(0, 0, angleZ); //これから生成する弾丸の角度をセッティング
         //生成してbulletObjに情報を格納
@@ -66,6 +72,14 @@ public class RifleShooter : MonoBehaviour
         Rigidbody2D bulletRigid = bulletObj.GetComponent<Rigidbody2D>();
         bulletRigid.AddForce(v, ForceMode2D.Impulse);
 
+        //攻撃中フラグをOFFにするメソッド　を　時間差で発動
+        Invoke("StopAttack",shootDelay);
+    }
+
+    //攻撃中フラグをOFFにするメソッド
+    void StopAttack()
+    {
+        inAttack = false;
     }
 
 }
