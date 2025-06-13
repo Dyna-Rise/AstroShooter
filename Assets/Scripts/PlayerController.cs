@@ -47,9 +47,7 @@ public class PlayerController : MonoBehaviour
         if (inDamage)
         {
             //点滅処理
-            float value = Mathf.Sin(Time.time * 50); //valueに正負の波をつくる ※Time.timeはゲームの経過時間
-            if (value > 0) GetComponent<SpriteRenderer>().enabled = true; //絵を表示
-            else GetComponent<SpriteRenderer>().enabled = false; //絵を非表示
+
 
             return;
         }
