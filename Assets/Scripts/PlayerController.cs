@@ -31,6 +31,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (GameController.gameState != "playing" || inDamage) return;
+
         //モバイルからの入力がない場合のみ
         if (!isMobileInput)
         {
@@ -44,6 +46,8 @@ public class PlayerController : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if (GameController.gameState != "playing") return;
+
         if (inDamage)
         {
             //点滅処理
@@ -152,6 +156,7 @@ public class PlayerController : MonoBehaviour
         }
         else
         {
+            GameOver();
             //ゲームオーバー
             Debug.Log("ゲームオーバー");
         }
@@ -164,5 +169,23 @@ public class PlayerController : MonoBehaviour
         //プレイヤーの姿(SpriteRecdererコンポーネント)を明確に有効状態にしておく
         GetComponent<SpriteRenderer>().enabled = true;
     }
+
+    void GameOver()
+    {
+        GameController.gameState = "gameover";
+        //ゲームオーバー演出
+        GetComponent<CircleCollider2D>().enabled = false;　//コライダーなし
+        rbody.velocity = Vector2.zero; //動きを止める
+        rbody.gravityScale = 1; //重力発生
+        rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse); //上に跳ね上げる
+        anime.SetTrigger("death"); //死亡アニメの開始
+    }
+
+    //プレイヤーを消滅　※死亡アニメの終わりに起動予定
+    public void PlayerDestroy()
+    {
+        Destroy(gameObject);
+    }
+
 
 }

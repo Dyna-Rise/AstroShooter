@@ -90,14 +90,18 @@ public class EnemyController : MonoBehaviour
         {
             hp--;
 
-            if(hp < 0) //死亡
+            if(hp <= 0) //死亡
             {
                 //死亡演出
                 GetComponent<CapsuleCollider2D>().enabled = false;
                 rbody.velocity = Vector2.zero;
-                GetComponent<Animator>().SetBool("death",true);
-                Destroy(gameObject, 1.0f);
+                GetComponent<Animator>().SetTrigger("death");          
             }
         }
+    }
+
+    public void EnemyDestroy()
+    {
+        Destroy(gameObject);
     }
 }
