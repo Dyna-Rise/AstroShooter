@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class LightController : MonoBehaviour
 {
-    public static bool getLight = true; //ライトを入手しているかどうかフラグ
+    public static bool getLight; //ライトを入手しているかどうかフラグ
     public static bool onLight; //ライトスイッチのON/OFF
     public GameObject playerLight; //ライトのオブジェクト
 

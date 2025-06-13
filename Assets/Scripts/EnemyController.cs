@@ -77,7 +77,7 @@ public class EnemyController : MonoBehaviour
         else
         {
             isActive = false;　//追跡モードOFF
-            Debug.Log("追跡OFF");
+            //Debug.Log("追跡OFF");
             rbody.velocity = Vector2.zero; //移動をストップ
             //Vectro2.zero → new Vector2(0,0)
         }
