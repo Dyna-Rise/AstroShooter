@@ -5404,7 +5404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isGoldDoor: 0
-  goldDoorImage: {fileID: 0}
+  goldDoorImage: {fileID: 21300000, guid: 02fd8c86c1f7488429c15614d8e4468c, type: 3}
   isEkey: 0
 --- !u!61 &1806452632
 BoxCollider2D:
