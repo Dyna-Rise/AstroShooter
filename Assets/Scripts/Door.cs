@@ -19,6 +19,9 @@ public class Door : MonoBehaviour
 
     bool talking; //会話発生中かどうか
 
+    //セーブデータ用の識別ID
+    public int arrangeId;
+
     // Start is called before the first frame update
     void Start()
     {
