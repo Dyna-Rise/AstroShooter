@@ -108,6 +108,9 @@ public class SaveSystem
         //シーン名の獲得
         string sceneName = PlayerPrefs.GetString("SaveScene");
         if (string.IsNullOrEmpty(sceneName)) sceneName = "Title";
+
+        RoomController.isContinue = true; //コンティニューしたというフラグ
+
         SceneManager.LoadScene(sceneName);
     }
 }

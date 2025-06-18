@@ -8,6 +8,9 @@ public class RoomController : MonoBehaviour
     //ゲーム中共通して管理するドア番号
     public static int doorNumber;
 
+    //シーン移動かどうか/コンティニューかどうか
+    public static bool isContinue;
+
     //プレイヤーのアニメと方向を計算
     int direction;
     float angleZ;
@@ -15,6 +18,19 @@ public class RoomController : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        GameObject player = GameObject.FindGameObjectWithTag("Player");
+
+        //ゲームをロードした処理
+        if (isContinue)
+        {
+            //レジストリから最後の座標データを獲得
+            float posX = PlayerPrefs.GetFloat("posX");
+            float posY = PlayerPrefs.GetFloat("posY");
+            //獲得したデータを元にプレイヤーの座標を設定
+            player.transform.position = new Vector2(posX, posY);
+            return;
+        }
+
         GameObject[] exits = GameObject.FindGameObjectsWithTag("Exit");
         for(int i = 0; i <exits.Length; i++)
         {
@@ -48,7 +64,6 @@ public class RoomController : MonoBehaviour
                         break;
                 }
 
-                GameObject player = GameObject.FindGameObjectWithTag("Player");
                 player.GetComponent<PlayerController>().angleZ = angleZ; //プレイヤーの角度を決める
                 player.GetComponent<Animator>().SetInteger("direction", direction); //アニメを決める
                 player.transform.position = new Vector3(x,y); //位置を決める
@@ -72,6 +87,8 @@ public class RoomController : MonoBehaviour
     {
         //staticであるRoomControllerのdoorNumberに引数に指定したdoornumを代入
         doorNumber = doornum; //次のシーンにドア番号が引き継がれる
+        isContinue = false;//コンティニューではなく、単なる部屋移動というフラグにしておく
+
         SceneManager.LoadScene(scenename);
     }
 }
