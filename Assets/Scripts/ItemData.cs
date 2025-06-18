@@ -40,6 +40,8 @@ public class ItemData : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        ExistCheck(); //リストをみて、存在してて良いかをチェック
+
         rbody = GetComponent<Rigidbody2D>();
 
         //TalkCanvasを見つける
@@ -94,7 +96,7 @@ public class ItemData : MonoBehaviour
             }
 
             if (!isTalk)
-            { 
+            {
                 ItemDestroy(); //アイテムは消滅
             }
             else
@@ -110,6 +112,14 @@ public class ItemData : MonoBehaviour
                 talking = true; //会話が開始されている
                 Time.timeScale = 0f; //ゲーム進行を止める
             }
+
+            //消費リストにまだ掲載されていなければリストアップ
+            if (!SaveController.Instance.IsConsumed(this.tag, arrangeId) && arrangeId != 0)
+            {
+                //リストに追加
+                SaveController.Instance.ConsumedEvent(this.tag, arrangeId);
+            }
+
         }
     }
 
@@ -120,5 +130,14 @@ public class ItemData : MonoBehaviour
         rbody.gravityScale = 2.5f;
         rbody.AddForce(new Vector2(0, 6), ForceMode2D.Impulse);
         Destroy(gameObject, 0.5f);
+    }
+
+    //存在確認メソッド
+    void ExistCheck()
+    {
+        if (SaveController.Instance.IsConsumed(this.tag, arrangeId))
+        {
+            Destroy(gameObject);
+        }
     }
 }

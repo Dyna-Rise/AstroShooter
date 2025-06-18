@@ -37,13 +37,13 @@ public class SaveController : MonoBehaviour
     }
 
     //リストに加えるメソッド
-    void ConsumedEvent(string tag,int arrangeId)
+    public void ConsumedEvent(string tag,int arrangeId)
     {
         consumedEvent.Add((tag,arrangeId));
     }
 
     //すでにリストにあるかどうかのチェックメソッド
-    bool IsConsumed(string tag,int arrangeId)
+    public bool IsConsumed(string tag,int arrangeId)
     {
         //引数に指定したタグと識別番号の組み合わせが
         //すでにリストにあるかどうかチェックしてtrueかfalseを返す
