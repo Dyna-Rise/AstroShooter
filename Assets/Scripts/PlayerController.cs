@@ -179,12 +179,33 @@ public class PlayerController : MonoBehaviour
         rbody.gravityScale = 1; //重力発生
         rbody.AddForce(new Vector2(0, 5), ForceMode2D.Impulse); //上に跳ね上げる
         anime.SetTrigger("death"); //死亡アニメの開始
+
+        //BGM停止
+        SoundController.soundController.StopBgm();
+
+        //ゲームオーバーSEの再生
+        SoundController.soundController.SEPlay(SEType.GameOver);
     }
 
     //プレイヤーを消滅　※死亡アニメの終わりに起動予定
     public void PlayerDestroy()
     {
         Destroy(gameObject);
+    }
+
+    //Mobile操作
+    public void MobileAxis(float x, float y)
+    {
+        axisH = x;
+        axisV = y;
+        if(axisH == 0 && axisV == 0)
+        {
+            isMobileInput = false;
+        }
+        else
+        {
+            isMobileInput = true;
+        }
     }
 
 

@@ -73,6 +73,18 @@ public class RoomController : MonoBehaviour
             }
         }
 
+        //現在のシーン名を取得
+        string scenename = SceneManager.GetActiveScene().name;
+        if(scenename == "Boss") //シーン名がボスのステージなら
+        {
+            //ボスのBGMを鳴らす
+            SoundController.soundController.PlayBgm(BGMType.InBoss);
+        }
+        else
+        {
+            //通常BGM
+            SoundController.soundController.PlayBgm(BGMType.InGame);
+        }
 
     }
 

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class BossController : MonoBehaviour
 {
@@ -32,9 +33,10 @@ public class BossController : MonoBehaviour
                 //プレイヤーとの距離チェック
                 Vector3 plpos = player.transform.position;
                 float dist = Vector2.Distance(transform.position, plpos);
+
                 if (dist <= reactionDistance && inArrack == false)
                 {
-                    Debug.Log("BOSS:" + hp);
+                    //Debug.Log("BOSS:" + hp);
                     //範囲内＆攻撃中ではない＆HP攻撃
                     inArrack = true;
                     // アニメを切り換える
@@ -58,7 +60,7 @@ public class BossController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "Arrow")
+        if (collision.gameObject.tag == "Bullet")
         {
             //ダメージ
             hp--;
@@ -69,10 +71,24 @@ public class BossController : MonoBehaviour
                 GetComponent<CircleCollider2D>().enabled = false;
                 // アニメを切り換える
                 GetComponent<Animator>().Play("BossDead");
+
+                inArrack = false;
+
+                //BGM停止
+                SoundController.soundController.StopBgm();
+
+                //クリアSEの再生
+                SoundController.soundController.SEPlay(SEType.GameClear);
+
                 //1秒後に消す
-                Destroy(gameObject, 1);
-                //SE再生（ドア開ける）
-                //SoundManager.soundManager.SEPlay(SEType.BossKilled);
+                //Destroy(gameObject, 1);
+
+                //ステータスを切り替える
+                GameController.gameState = "gameclear"; 
+
+                //時間差でシーンが切り替わる
+                Invoke("GameClear", 10);
+
             }
         }
     }
@@ -80,10 +96,13 @@ public class BossController : MonoBehaviour
     void Attack()
     {
         //発射口オブジェクトを取得
+        //子オブジェクトから名前と一致するTransform情報を拾います
         Transform tr = transform.Find("gate");
         GameObject gate = tr.gameObject;
+        //GameObject gate = transform.Find("gate").gameObject;
         //弾を発射するベクトルを作る
         GameObject player = GameObject.FindGameObjectWithTag("Player");
+
         if (player != null)
         {
             float dx = player.transform.position.x - gate.transform.position.x;
@@ -102,5 +121,11 @@ public class BossController : MonoBehaviour
             Rigidbody2D rbody = bullet.GetComponent<Rigidbody2D>();
             rbody.AddForce(v, ForceMode2D.Impulse);
         }
+    }
+
+    //ボス撃破後タイトルに戻す
+    void GameClear()
+    {
+        SceneManager.LoadScene("Title");
     }
 }

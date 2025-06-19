@@ -50,7 +50,7 @@ public class RifleShooter : MonoBehaviour
     }
 
     //攻撃（弾丸発射メソッド）
-    void Attack()
+    public void Attack()
     {
         ////すでに攻撃中であれば何もしない
         if (GameController.hasBullet <= 0 || inAttack) return;
@@ -75,6 +75,10 @@ public class RifleShooter : MonoBehaviour
 
         //攻撃中フラグをOFFにするメソッド　を　時間差で発動
         Invoke("StopAttack",shootDelay);
+
+        //攻撃のSEを再生
+        SoundController.soundController.SEPlay(SEType.Shoot);
+
     }
 
     //攻撃中フラグをOFFにするメソッド

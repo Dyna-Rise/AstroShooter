@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class UIController : MonoBehaviour
 {
@@ -18,17 +19,26 @@ public class UIController : MonoBehaviour
     int hasLife;
     bool hasLight;
 
+    public GameObject gameOverPanel; //ゲームオーバー時に出すパネル
+
+
     // Start is called before the first frame update
     void Start()
     {
         UIDisplay(); //弾丸と鍵、ライトの初期表示をさせる
         hasLife = PlayerController.hp; //一度HPの数をあわせる
         LifeDisplay(); //Lifeの表示
+        gameOverPanel.SetActive(false); //ゲームオーバーパネルを隠す
     }
 
     // Update is called once per frame
     void Update()
     {
+        if(GameController.gameState == "gameover")
+        {
+            gameOverPanel.SetActive(true); //ゲームオーバーと表示
+        }
+
         //もしもUIControllerが把握していた数と実際のstaticに変化が生じたら
         //UIを更新
         if(hasBullet != GameController.hasBullet)
@@ -92,5 +102,20 @@ public class UIController : MonoBehaviour
         {
             lifes[i].SetActive(true);
         }
+    }
+
+    //タイトルに移動
+    public void toTitle()
+    {
+        SceneManager.LoadScene("Title");
+    }
+
+    //セーブした地点からやり直す
+    public void Retry()
+    {
+        //BGMをストップ
+        SoundController.soundController.PlayBgm(BGMType.None);
+
+        SaveSystem.LoadGame();
     }
 }

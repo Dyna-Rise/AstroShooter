@@ -17,20 +17,22 @@ public class ObjectGenManager : MonoBehaviour
     {
         //ItemDataを探す
         ItemData[] items = GameObject.FindObjectsOfType<ItemData>();
-        //ループを回して矢を探す
+
+        //ループを回して弾を探す
         for (int i = 0; i < items.Length; i++)
         {
             ItemData item = items[i];
             if (item.type == ItemType.bullet)
             {
-                return; //矢があれば何もせずにメソッドを抜ける
+                return; //弾丸があれば何もせずにメソッドを抜ける
             }
         }
-        //プレイヤーの存在と矢の数をチェックする
+
+        //プレイヤーの存在と弾の数をチェックする
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         if (GameController.hasBullet == 0 && player != null)
         {
-            //矢の数が０でプレイヤーがいる
+            //弾の数が０でプレイヤーがいる
             //配列の範囲で乱数を作る
             int index = Random.Range(0, objGens.Length);
             ObjectGenPoint objgen = objGens[index];
