@@ -12,12 +12,16 @@ public class UIController : MonoBehaviour
     public GameObject lightPanel; //ライトパネル
     public GameObject[] lifes; //Life1～Life5
 
+    public GameObject EkeyPanel; //調べるパネル
+
     //UIController.cs 上における アイテムの残数や有無
     int hasBullet;
     int hasKeyG;
     int hasKeyS;
     int hasLife;
     bool hasLight;
+
+    bool investigate; //調べるフラグ
 
     public GameObject gameOverPanel; //ゲームオーバー時に出すパネル
 
@@ -29,6 +33,7 @@ public class UIController : MonoBehaviour
         hasLife = PlayerController.hp; //一度HPの数をあわせる
         LifeDisplay(); //Lifeの表示
         gameOverPanel.SetActive(false); //ゲームオーバーパネルを隠す
+        EkeyPanel.SetActive(false);//調べるパネルは隠す
     }
 
     // Update is called once per frame
@@ -68,6 +73,12 @@ public class UIController : MonoBehaviour
         {
             hasLife = PlayerController.hp;
             LifeDisplay(); //表示のリセットと再表示
+        }
+
+        if (investigate != GameController.investigate) //調べるパネルON
+        {
+            investigate = GameController.investigate;
+            EkeyPanel.SetActive(investigate);
         }
     }
 
@@ -115,6 +126,9 @@ public class UIController : MonoBehaviour
     {
         //BGMをストップ
         SoundController.soundController.PlayBgm(BGMType.None);
+
+        if(PlayerPrefs.GetInt("Life") <= 0)
+        PlayerPrefs.SetInt("Life", 5);
 
         SaveSystem.LoadGame();
     }

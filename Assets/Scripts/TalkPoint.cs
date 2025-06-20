@@ -1,10 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.VersionControl;
 using UnityEngine;
 
-public class SavePoint : MonoBehaviour
+public class TalkPoint : MonoBehaviour
 {
     //接触ではなく領域に入ったかどうかのフラグ
     bool inSavePointArea;
@@ -15,6 +14,9 @@ public class SavePoint : MonoBehaviour
     TextMeshProUGUI messageText;
 
     bool talking; //会話発生中かどうか
+
+    [TextArea]
+    public string message;
 
     // Start is called before the first frame update
     void Start()
@@ -35,12 +37,8 @@ public class SavePoint : MonoBehaviour
             //Playerが近くにいる
             if (inSavePointArea)
             {
-                SaveSystem.SaveGame(); //セーブされる
-
                 GameController.gameState = "talk";
 
-                //トークウィンドウに出すメッセージの作成
-                string message = "セーブされました！";
                 //UIパネルを表示
                 messagePanel.SetActive(true);
                 //UIテキストに変数の内容を反映

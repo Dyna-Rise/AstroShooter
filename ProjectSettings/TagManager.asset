@@ -11,6 +11,7 @@ TagManager:
   - ItemBox
   - Exit
   - Door
+  - Ball
   layers:
   - Default
   - TransparentFX

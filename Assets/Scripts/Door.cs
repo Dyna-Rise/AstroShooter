@@ -155,6 +155,7 @@ public class Door : MonoBehaviour
         if(isEkey && collision.gameObject.CompareTag("Player"))
         {
             inDoorArea = true; //ドアの領域内に侵入
+            GameController.investigate = true; //調べるパネルON
         }
     }
 
@@ -164,6 +165,7 @@ public class Door : MonoBehaviour
         if (isEkey && collision.gameObject.CompareTag("Player"))
         {
             inDoorArea = false; //ドアの領域から抜ける
+            GameController.investigate = false; //調べるパネルOFF
         }
     }
 

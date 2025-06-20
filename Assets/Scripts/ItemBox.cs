@@ -54,6 +54,7 @@ public class ItemBox : MonoBehaviour
         if (isEkey && collision.gameObject.CompareTag("Player"))
         {
             inBoxArea = true; //エリアに入っているというフラグをON
+            GameController.investigate = true; //調べるパネルON
         }
     }
 
@@ -64,6 +65,7 @@ public class ItemBox : MonoBehaviour
         if (isEkey && collision.gameObject.CompareTag("Player"))
         {
             inBoxArea = false; //エリア侵入のフラグをOFF
+            GameController.investigate = false; //調べるパネルOFF
         }
     }
 
